@@ -6,8 +6,10 @@ import scala.concurrent.duration._
 
 class BasicItSimulation extends Simulation {
 
+  val testUrl = "https://corp-bmafbx6dz8-x.d2dragon.com/";
+
   val httpProtocol = http
-    .baseUrl("http://computer-database.gatling.io") // Here is the root for all relative URLs
+    .baseUrl(testUrl) // Here is the root for all relative URLs
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // Here are the common headers
     .acceptEncodingHeader("gzip, deflate")
     .acceptLanguageHeader("en-US,en;q=0.5")
@@ -16,7 +18,5 @@ class BasicItSimulation extends Simulation {
   val scn = scenario("Scenario Name") // A scenario is a chain of requests and pauses
     .exec(http("request_1")
       .get("/"))
-    .pause(7) // Note that Gatling has recorder real time pauses
-
-  setUp(scn.inject(atOnceUsers(1)).protocols(httpProtocol))
+  setUp(scn.inject(atOnceUsers(100)).protocols(httpProtocol))
 }
